@@ -35,3 +35,10 @@ else
 	end;
 
 exec spBalanceRange;
+
+execute spBalanceRange @vendorvar = 'M%';
+
+execute spBalanceRange @balancemin = 200, @balancemax = 1000;
+
+
+EXEC spBalanceRange '[C,F]%', @balancemax = 200;
