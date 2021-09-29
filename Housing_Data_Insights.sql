@@ -91,3 +91,34 @@ from (select *,
 	  from Nashville_housing_info) sales_info
 where Sale_Percent_Difference > 100
 order by Sale_Percent_Difference desc
+
+
+-- How many sales in each city
+
+select distinct NewCity,
+       count(NewCity) sales_count_by_city,
+	   sum(SalePrice) total_sales_by_city
+from Nashville_housing_info
+group by NewCity
+Order by 2 desc
+
+-- Information on Unknown city with sale
+
+select *
+from Nashville_housing_info
+where SalePrice = 298000 and
+      LegalReference = '20160404-0031713'
+
+
+-- Total Sales per Acreage 
+
+select Acreage,
+       count(Acreage) acreage_sold,
+	   Sum(LandValue) total_sales_of_acreage
+from Nashville_housing_info
+group by Acreage
+order by 3 desc
+
+select *
+from Nashville_housing_info
+where Acreage = 0.03
