@@ -82,6 +82,7 @@ select *,
 	   (TotalValue/SalePrice)*100 Sale_Percent_Difference
 from Nashville_housing_info
 
+-- Insights on price changes and percent difference from Total Value and Sale Price
 
 select *
 from (select *,
