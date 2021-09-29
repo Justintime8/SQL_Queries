@@ -122,3 +122,46 @@ order by 3 desc
 select *
 from Nashville_housing_info
 where Acreage = 0.03
+
+
+-- Sales by date
+
+select SalesDateConverted
+from Nashville_housing_info
+order by 1 desc
+
+select YEAR(SalesDateConverted) Year_of_Sales,
+       count(SalesDateConverted) count_of_Sales_per_year
+from Nashville_housing_info
+group by SalesDateConverted
+Order by 2 desc
+
+select YEAR(SalesDateConverted) Year_of_Sales,
+       count(SalesDateConverted) count_of_Sales_per_year,
+	   sum(SalePrice) Total_Sales_Per_Year
+from Nashville_housing_info
+group by Year(SalesDateConverted)
+Order by 2 desc
+
+select YEAR(SalesDateConverted) Year_of_Sales,
+       count(SalesDateConverted) count_of_Sales_per_year,
+	   Min(SalePrice) Max_Sales_Per_Year
+from Nashville_housing_info
+group by Year(SalesDateConverted)
+Order by 2 desc
+
+Select year(SalesDateConverted) year_of_sale,
+       min(SalePrice) min_sale
+from Nashville_housing_info
+group by SalesDateConverted
+order by 2 asc
+
+select min(SalePrice) min_sale
+from Nashville_housing_info
+
+
+Select *
+from Nashville_housing_info
+where SalePrice = 50
+order by SalePrice asc
+ 
