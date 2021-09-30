@@ -145,7 +145,7 @@ Order by 2 desc
 
 select YEAR(SalesDateConverted) Year_of_Sales,
        count(SalesDateConverted) count_of_Sales_per_year,
-	   Min(SalePrice) Max_Sales_Per_Year
+	   Min(SalePrice) Min_Sales_Per_Year
 from Nashville_housing_info
 group by Year(SalesDateConverted)
 Order by 2 desc
@@ -156,12 +156,32 @@ from Nashville_housing_info
 group by SalesDateConverted
 order by 2 asc
 
+
+-- Min and Max Sales insights
+
 select min(SalePrice) min_sale
 from Nashville_housing_info
 
 
 Select *
 from Nashville_housing_info
-where SalePrice = 50
-order by SalePrice asc
- 
+where SalePrice = (select min(SalePrice) min_sale
+				   from Nashville_housing_info)
+
+Select *
+from Nashville_housing_info
+where SalePrice = (Select max(SalePrice) max_sale
+				   from Nashville_housing_info)
+
+
+ Select distinct (Select max(SalePrice) 
+		          from Nashville_housing_info) max_sale,
+		         (Select min(SalePrice)
+		          from Nashville_housing_info) min_sale
+from Nashville_housing_info
+
+
+Select *
+from Nashville_housing_info
+where SalePrice = (Select max(SalePrice) max_sale
+				   from Nashville_housing_info)
