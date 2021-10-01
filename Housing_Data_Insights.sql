@@ -124,7 +124,7 @@ from Nashville_housing_info
 where Acreage = 0.03
 
 
--- Sales by date
+-- Sales by year
 
 select SalesDateConverted
 from Nashville_housing_info
@@ -185,3 +185,5 @@ Select *
 from Nashville_housing_info
 where SalePrice = (Select max(SalePrice) max_sale
 				   from Nashville_housing_info)
+
+select
