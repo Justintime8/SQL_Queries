@@ -204,6 +204,15 @@ where SalePrice < TotalValue
 group by OwnerName
 order by 2 desc
 
+
+select LandUse,
+       count(LandUse) count_of_land_use,
+	   sum(TotalValue) sum_of_sales
+from Nashville_housing_info
+where SalePrice < TotalValue
+group by LandUse
+order by 2 desc
+
 -- Insights on Vacant Res Land sold
 
 select OwnerName,
@@ -227,9 +236,23 @@ order by 2 desc
 
 
 Select LandUse,
-       year(SalesDateConverted),
+       year(SalesDateConverted) year_of_sale,
 	   count(LandUse) count_of_Vacant_Land,
 	   avg(TotalValue) avg_value
 from Nashville_housing_info
 where LandUse = 'VACANT RES LAND'
 group by LandUse, year(SalesDateConverted)
+
+
+--insights on Single Family Homes sold under Total Value
+
+Select *
+from Nashville_housing_info
+where SalePrice < TotalValue and
+      LandUse = 'SINGLE FAMILY'
+order by SalePrice asc
+
+
+
+
+
