@@ -186,4 +186,50 @@ from Nashville_housing_info
 where SalePrice = (Select max(SalePrice) max_sale
 				   from Nashville_housing_info)
 
-select
+
+
+
+-- Insights on Sale Price of Property less than Total Value
+
+Select *
+from Nashville_housing_info
+where SalePrice < TotalValue
+order by SalePrice asc
+
+select OwnerName,
+       count(OwnerName) count_of_land_use,
+	   sum(TotalValue) sum_of_sales
+from Nashville_housing_info
+where SalePrice < TotalValue
+group by OwnerName
+order by 2 desc
+
+-- Insights on Vacant Res Land sold
+
+select OwnerName,
+       count(OwnerName) count_of_land_use,
+	   sum(TotalValue) sum_of_sales
+from Nashville_housing_info
+where SalePrice < TotalValue and
+      LandUse = 'VACANT RES LAND'
+group by OwnerName
+order by 2 desc
+
+select OwnerName,
+       count(LandUSE) count_of_land_use,
+	   year(SalesDateConverted) year_of_sale,
+	   sum(TotalValue) sum_of_sales
+from Nashville_housing_info
+where SalePrice < TotalValue and
+      LandUse = 'VACANT RES LAND'
+group by OwnerName, year(SalesDateConverted)
+order by 2 desc
+
+
+Select LandUse,
+       year(SalesDateConverted),
+	   count(LandUse) count_of_Vacant_Land,
+	   avg(TotalValue) avg_value
+from Nashville_housing_info
+where LandUse = 'VACANT RES LAND'
+group by LandUse, year(SalesDateConverted)
