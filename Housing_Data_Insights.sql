@@ -254,5 +254,233 @@ order by SalePrice asc
 
 
 
+Select LandUse,
+       year(SalesDateConverted) year_of_sale,
+       AVG(SalePrice) avg_sale_price,
+	   avg(TotalValue) avg_total_value,
+	   (avg(Saleprice) - avg(TotalValue)) diff_in_price
+from Nashville_housing_info
+where SalePrice < TotalValue and
+      LandUse = 'SINGLE FAMILY' and
+	  SoldAsVacant = 'YES'
+group by LandUse, year(SalesDateConverted)
 
 
+
+
+create view agregate_data as
+Select LandUse,
+       year(SalesDateConverted) year_of_sale,
+       AVG(SalePrice) avg_sale_price,
+	   avg(TotalValue) avg_total_value,
+	   (avg(Saleprice) - avg(TotalValue)) diff_in_price
+from Nashville_housing_info
+where SalePrice < TotalValue and
+      LandUse = 'SINGLE FAMILY' and
+	  SoldAsVacant = 'YES'
+group by LandUse, year(SalesDateConverted)
+
+select *,
+      round((diff_in_price/avg_sale_price),4)*100 percent_difference
+from agregate_data
+order by 2 desc
+
+
+
+-- How many single family homes were not vaccant when sold
+
+Select *
+from Nashville_housing_info
+where LandUse = 'SINGLE FAMILY' and
+      SoldAsVacant = 'No'
+
+select LandUse,
+       count(LandUse) Count_of_Land
+from Nashville_housing_info
+where LandUse = 'SINGLE FAMILY' and
+      SoldAsVacant = 'No'
+group by LandUse
+
+
+Select *
+from Nashville_housing_info
+where LandUse = 'SINGLE FAMILY' and
+      SoldAsVacant = 'No' and
+	  SalePrice < TotalValue
+order by SalePrice asc
+
+
+create view agregate_data__no_vacant as
+Select LandUse,
+       year(SalesDateConverted) year_of_sale,
+       AVG(SalePrice) avg_sale_price,
+	   avg(TotalValue) avg_total_value,
+	   (avg(TotalValue)- avg(Saleprice)) diff_in_price
+from Nashville_housing_info
+where SalePrice < TotalValue and
+      LandUse = 'SINGLE FAMILY' and
+	  SoldAsVacant = 'No'
+group by LandUse, year(SalesDateConverted)
+
+select *,
+      round((diff_in_price/avg_sale_price),4)*100 percent_difference
+from agregate_data__no_vacant
+order by 2 desc
+
+
+-- no vacanct sales by month
+
+select month(SalesDateConverted) month_date,
+       count(month(SalesDateConverted)) count_of_months
+from Nashville_housing_info
+group by month(SalesDateConverted)
+order by 1 asc
+
+
+select month(SalesDateConverted) month_date,
+       count(month(SalesDateConverted)) count_of_months,
+	   avg(TotalValue) avg_total,
+	   avg(SalePrice) avg_sale_price
+from Nashville_housing_info
+group by month(SalesDateConverted)
+order by 1 asc
+
+
+
+select month(SalesDateConverted) month_date,
+       count(month(SalesDateConverted)) count_of_months,
+	   avg(TotalValue) avg_total,
+	   avg(SalePrice) avg_sale_price
+from Nashville_housing_info
+where year(SalesDateConverted) = 2013
+group by month(SalesDateConverted)
+order by 1 asc
+
+-- data for 2013
+create view data_2013 as
+select month(SalesDateConverted) month_date,
+       count(month(SalesDateConverted)) count_of_months,
+	   avg(TotalValue) avg_total,
+	   avg(SalePrice) avg_sale_price
+from Nashville_housing_info
+where year(SalesDateConverted) = 2013
+group by month(SalesDateConverted)
+
+
+
+select case 
+		  when month_date = 1 then 'January'
+		  when month_date = 2 then 'February'
+		  when month_date = 3 then 'March'
+		  when month_date = 4 then 'April'
+		  when month_date = 5 then 'May'
+		  when month_date = 6 then 'June'
+		  when month_date = 7 then 'July'
+		  when month_date = 8 then 'August'
+		  when month_date = 9 then 'September'
+		  when month_date = 10 then 'October'
+		  when month_date = 11 then 'November'
+		  when month_date = 12 then 'December'
+		  else 'none'
+		  end month,
+		  *
+from data_2013
+order by month_date asc
+
+-- data for 2014
+
+create view data_2014 as
+select month(SalesDateConverted) month_date,
+       count(month(SalesDateConverted)) count_of_months,
+	   avg(TotalValue) avg_total,
+	   avg(SalePrice) avg_sale_price
+from Nashville_housing_info
+where year(SalesDateConverted) = 2014
+group by month(SalesDateConverted)
+
+
+
+select case 
+		  when month_date = 1 then 'January'
+		  when month_date = 2 then 'February'
+		  when month_date = 3 then 'March'
+		  when month_date = 4 then 'April'
+		  when month_date = 5 then 'May'
+		  when month_date = 6 then 'June'
+		  when month_date = 7 then 'July'
+		  when month_date = 8 then 'August'
+		  when month_date = 9 then 'September'
+		  when month_date = 10 then 'October'
+		  when month_date = 11 then 'November'
+		  when month_date = 12 then 'December'
+		  else 'none'
+		  end month,
+		  *
+from data_2014
+order by month_date asc
+
+
+-- 2015 data
+
+create view data_2015 as
+select month(SalesDateConverted) month_date,
+       count(month(SalesDateConverted)) count_of_months,
+	   avg(TotalValue) avg_total,
+	   avg(SalePrice) avg_sale_price
+from Nashville_housing_info
+where year(SalesDateConverted) = 2015
+group by month(SalesDateConverted)
+
+
+
+select case 
+		  when month_date = 1 then 'January'
+		  when month_date = 2 then 'February'
+		  when month_date = 3 then 'March'
+		  when month_date = 4 then 'April'
+		  when month_date = 5 then 'May'
+		  when month_date = 6 then 'June'
+		  when month_date = 7 then 'July'
+		  when month_date = 8 then 'August'
+		  when month_date = 9 then 'September'
+		  when month_date = 10 then 'October'
+		  when month_date = 11 then 'November'
+		  when month_date = 12 then 'December'
+		  else 'none'
+		  end month,
+		  *
+from data_2015
+order by month_date asc
+
+
+-- 2016 data
+
+create view data_2016 as
+select month(SalesDateConverted) month_date,
+       count(month(SalesDateConverted)) count_of_months,
+	   avg(TotalValue) avg_total,
+	   avg(SalePrice) avg_sale_price
+from Nashville_housing_info
+where year(SalesDateConverted) = 2016
+group by month(SalesDateConverted)
+
+
+
+select case 
+		  when month_date = 1 then 'January'
+		  when month_date = 2 then 'February'
+		  when month_date = 3 then 'March'
+		  when month_date = 4 then 'April'
+		  when month_date = 5 then 'May'
+		  when month_date = 6 then 'June'
+		  when month_date = 7 then 'July'
+		  when month_date = 8 then 'August'
+		  when month_date = 9 then 'September'
+		  when month_date = 10 then 'October'
+		  when month_date = 11 then 'November'
+		  when month_date = 12 then 'December'
+		  else 'none'
+		  end month,
+		  *
+from data_2016
+order by month_date asc
