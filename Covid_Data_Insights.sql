@@ -12,7 +12,7 @@ from Covid_Deaths
 where location = 'North America'
 
 
--- view for total cases with month names
+-- total cases by month in China
 
 
 select case
@@ -40,3 +40,32 @@ group by month(date), location, year(date)
 order by avg_cases desc
 
 
+
+
+-- location data
+
+select location,
+	   max(total_cases) max_cases,
+	   year(date) year
+from Covid_Deaths
+where location <> 'World' and
+      year(date) = 2021
+group by location, year(date)
+order by max_cases desc
+
+select location,
+	   max(total_cases) max_cases,
+	   year(date) year,
+	   case
+		when max(total_cases) > 10000000 then 'Severe Death Count'
+		when max(total_cases) > 1000000 then 'High Death Count'
+		when max(total_cases) > 100000 then 'Mid Death Count'
+		when max(total_cases) > 10000 then 'Moderate Death Count'
+		when Max(total_cases) > 1000 then 'Low Death Count'
+		else 'Minimum Death Count'
+		end death_count
+from Covid_Deaths
+where location <> 'World' and
+      year(date) = 2021
+group by location, year(date)
+order by max_cases desc
